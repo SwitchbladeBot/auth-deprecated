@@ -1,0 +1,21 @@
+{
+  "name": "auth",
+  "version": "1.0.0",
+  "description": "Switchblade auth service",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "start-dev": "nodemon --exec node -r dotenv/config src/index.js"
+  },
+  "author": "Switchblade team",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "node-fetch": "^2.6.0"
+  },
+  "devDependencies": {
+    "dotenv": "^8.2.0",
+    "nodemon": "^2.0.3"
+  }
+}
