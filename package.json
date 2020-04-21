@@ -17,5 +17,13 @@
   "devDependencies": {
     "dotenv": "^8.2.0",
     "nodemon": "^2.0.3"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SwitchbladeBot/auth.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SwitchbladeBot/auth/issues"
+  },
+  "homepage": "https://github.com/SwitchbladeBot/auth#readme"
 }
