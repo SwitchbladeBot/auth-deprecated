@@ -1,22 +1,22 @@
 const express = require('express')
 const cors = require('cors')
-
 const app = express()
 
 const PORT = process.env.PORT || 80
 
-// Routes
-// TODO
+const authorizeRoute = require('./routes/authorize.js')
 
+// Routes
+app.use(authorizeRoute())
 
 // TODO: configure cors
 app.use(cors())
 
 
-app.get('/', (req, res) => {
-  res(`<pre>
+app.all('/', (req, res) => {
+  res.send(`<pre>
   Everything seems to be working.
-  If you went here by mistake
+  If you went here by mistake, go to <a href="https://switchblade.xyz">https://switchblade.xyz</a>
   </pre>`)
 })
 

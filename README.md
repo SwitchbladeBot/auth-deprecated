@@ -6,7 +6,7 @@ The authentication micro-service for switchblade micro-services
 
 ### Login workflow
 
-![login workflow](https://i.imgur.com/v8hMoWM.png)
+![login workflow](https://i.imgur.com/vhB8iDu.png)
 
 ### Authorization request workflow
 
