@@ -6,14 +6,11 @@ const { encodeQueryString } = require('../utils')
 module.exports = () => {
   router.get('/callback', async (req, res) => {
     const { code: authCode, state } = req.query
-    if (!authCode || !state) 
-      return res.json({ ok: false, message: 'Missing arguments.' })
+    if (!authCode || !state) { return res.json({ ok: false, message: 'Missing arguments.' }) }
 
     const client = clients[state.replace('client-', '')]
 
-    if (!client) 
-      return res.json({ ok: false, message: 'Invalid client.' })
-    
+    if (!client) { return res.json({ ok: false, message: 'Invalid client.' }) }
 
     const queryParams = {
       response_type: 'code',
@@ -28,4 +25,3 @@ module.exports = () => {
 
   return router
 }
-
