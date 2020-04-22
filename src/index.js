@@ -5,9 +5,11 @@ const app = express()
 const PORT = process.env.PORT || 80
 
 const authorizeRoute = require('./routes/authorize.js')
+const callbackRoute = require('./routes/callback.js')
 
 // Routes
 app.use(authorizeRoute())
+app.use(callbackRoute())
 
 // TODO: configure cors
 app.use(cors())

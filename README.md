@@ -6,11 +6,11 @@ The authentication micro-service for switchblade micro-services
 
 ### Login workflow
 
-![login workflow](https://i.imgur.com/ZMFbju4.png)
+![login workflow](https://i.imgur.com/gmcp3Vl.png)
 
 ### Authorization request workflow
 
-![request workflow](https://i.imgur.com/qVV6J1B.png)
+![request workflow](https://i.imgur.com/Ma10tNk.png)
 
 ## Routes to-do
 
@@ -18,7 +18,11 @@ The authentication micro-service for switchblade micro-services
 
 - `/callback` - Callback: Redirected from discord oauth, redirect to last callback with switchblade token
 
-- `/api/@me` - Authorization check: Checks if the authorization is correct and returns auth status (id, access token, etc)
+- `/api/check` - Authorization check: Checks if the authorization is correct and returns auth status (id, access token, etc)
+
+- `/api/refresh` - Authorization refresh; Receives a switchblade token and returns a new sb token with new accessToken
+
+- `/api/@me` - Discord authorization test; Returns simple information about the user for testing purposes (or not)
 
 ## Other to-do's
 
