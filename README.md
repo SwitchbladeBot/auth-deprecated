@@ -1,13 +1,25 @@
-**NEED TO RE-THINK**
+# Switchblade auth
 
-## ~~Routes to-do~~
+The authentication micro-service for switchblade micro-services
 
-- ~~`/authorize` - Authentication pop-up: accepts whitelisted callbacks url~~
+## Workflow
 
-- ~~`/callback` - Callback: Redirected from discord oauth, redirect to last callback with switchblade token~~
+### Login workflow
 
-- ~~`/api/@me` - Authorization check: Checks if the authorization is correct and returns auth status (id, access token, etc)~~
+![login workflow](https://i.imgur.com/v8hMoWM.png)
 
-## ~~Other to-do's~~
+### Authorization request workflow
 
-- ~~HTTPS only (cloudflare can redirect HTTP to HTTPS)~~
+![request workflow](https://i.imgur.com/qVV6J1B.png)
+
+## Routes to-do
+
+- `/authorize` - Authentication pop-up: accepts whitelisted callbacks url
+
+- `/callback` - Callback: Redirected from discord oauth, redirect to last callback with switchblade token
+
+- `/api/@me` - Authorization check: Checks if the authorization is correct and returns auth status (id, access token, etc)
+
+## Other to-do's
+
+- HTTPS only (cloudflare can redirect HTTP to HTTPS)
