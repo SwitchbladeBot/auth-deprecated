@@ -2,6 +2,10 @@ const express = require('express')
 const router = express.Router()
 const { clients } = require('../../config.json')
 const { encodeQueryString } = require('../utils')
+const fetch = require('node-fetch')
+const path = require('path')
+
+const API_URL = 'https://discordapp.com/api/v6'
 
 module.exports = () => {
   router.get('/callback', async (req, res) => {
@@ -12,15 +16,31 @@ module.exports = () => {
 
     if (!client) { return res.json({ ok: false, message: 'Invalid client.' }) }
 
-    const queryParams = {
-      response_type: 'code',
+    const params = {
       client_id: process.env.CLIENT_ID,
-      scope: client.scopes.join(' '),
-      state: `client-${clientId}`,
-      redirect_uri: process.env.REDIRECT_URI
+      client_secret: process.env.CLIENT_SECRET,
+      grant_type: 'authorization_code',
+      code: authCode,
+      redirect_uri: process.env.REDIRECT_URI,
+      scope: client.scopes.join(' ')
     }
 
-    res.redirect(`https://discordapp.com/api/oauth2/authorize?${encodeQueryString(queryParams)}`)
+    const result = await fetch(`${API_URL}/oauth2/token`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+      },
+      body: encodeQueryString(params)
+    }).then(r => r.json())
+
+    console.log(result)
+
+    console.log(path.relative(__dirname, '../views', 'error.html'))
+    if (result.error)
+      return res.sendFile(path.resolve(__dirname, '../views', 'error.html'))
+
+    res.json({ todo: true, meteLazy: true })
+
   })
 
   return router
