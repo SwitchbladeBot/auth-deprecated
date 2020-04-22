@@ -17,7 +17,7 @@ app.use(cors())
 app.all('/', (req, res) => {
   res.send(`<pre>
   Everything seems to be working.
-  If you went here by mistake, go to <a href="https://switchblade.xyz">https://switchblade.xyz</a>
+  If you came here by mistake, go to <a href="https://switchblade.xyz">https://switchblade.xyz</a>
   </pre>`)
 })
 
