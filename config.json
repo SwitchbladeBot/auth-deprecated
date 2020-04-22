@@ -1,0 +1,9 @@
+{
+  "clients": {
+    "test": {
+      "callback": "http://localhost:1929/auth/callback",
+      "name": "Test client",
+      "scopes": ["identify"]
+    }
+  }
+}
