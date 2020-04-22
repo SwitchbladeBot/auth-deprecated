@@ -6,9 +6,8 @@ const { encodeQueryString } = require('../utils')
 module.exports = () => {
   router.get('/authorize', async (req, res) => {
     const { client: clientId } = req.query
-    if (!clientId || !clients[clientId]) 
-      return res.json({ ok: false, message: 'Invalid client.' })
-    
+    if (!clientId || !clients[clientId]) { return res.json({ ok: false, message: 'Invalid client.' }) }
+
     const client = clients[clientId]
 
     const queryParams = {
@@ -24,4 +23,3 @@ module.exports = () => {
 
   return router
 }
-

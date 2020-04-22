@@ -14,7 +14,6 @@ app.use(callbackRoute())
 // TODO: configure cors
 app.use(cors())
 
-
 app.all('/', (req, res) => {
   res.send(`<pre>
   Everything seems to be working.
