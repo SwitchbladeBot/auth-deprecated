@@ -4,6 +4,7 @@ const { clients } = require('../../config.json')
 const { encodeQueryString } = require('../utils')
 const fetch = require('node-fetch')
 const path = require('path')
+const jwt = require('jsonwebtoken')
 
 const API_URL = 'https://discordapp.com/api/v6'
 
@@ -33,13 +34,12 @@ module.exports = () => {
       body: encodeQueryString(params)
     }).then(r => r.json())
 
-    console.log(result)
-
-    console.log(path.relative(__dirname, '../views', 'error.html'))
     if (result.error)
       return res.sendFile(path.resolve(__dirname, '../views', 'error.html'))
 
-    res.json({ todo: true, meteLazy: true })
+    const token = jwt.sign({ accessToken: result.access_token, refreshToken: result.refresh_token }, process.env.JWT_SIG)
+
+    res.redirect(`${client.callback}?token=${token}`)
 
   })
 
