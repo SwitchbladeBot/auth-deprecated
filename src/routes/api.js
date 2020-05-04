@@ -9,27 +9,15 @@ module.exports = () => {
     const { authorization } = req.headers
     if (!authorization) return res.json({ ok: false, message: 'Invalid token.' })
 
-    const data = jwt.verify(authorization, process.env.JWT_SIG)
-    if (!data) return res.json({ ok: false, message: 'Invalid token.' })
-    res.json({
-      ok: true,
-      ...data
-    })
-  })
-
-  router.get('/users/@me', async (req, res) => {
-    const { authorization } = req.headers
-    if (!authorization) return res.json({ ok: false, message: 'Invalid token.' })
-
-    const data = jwt.verify(authorization, process.env.JWT_SIG)
-    if (!data) return res.json({ ok: false, message: 'Invalid token.' })
-    
-    const result = await fetch(`${API_URL}/users/@me`, {
-      headers: {
-        authorization: data.accessToken
-      }
-    }).then(r => r.json())
-    res.json(result)
+    try {
+      const data = jwt.verify(authorization, process.env.JWT_SIG)
+      res.json({
+        ok: true,
+        ...data
+      })
+    } catch (e) {
+      res.json({ ok: false, message: 'Invalid token.' })
+    }
   })
 
   return router

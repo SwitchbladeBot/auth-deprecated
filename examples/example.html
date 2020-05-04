@@ -12,12 +12,18 @@
   <p id="main">You are not logged in</p>
   <p id="info"></p>
   <button onclick="login()">log in</button>
+  <button onclick="logout()">log out</button>
 </body>
 <script>
   const client = 'example'
   const authUrl = 'http://localhost:2554'
   const login = () => {
     const popup = window.open(`${authUrl}/authorize?client=${client}`, 'Switchblade login', 'width=500,height=800')
+  }
+
+  const logout = () => {
+    document.cookie = "sbToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
+    check()
   }
 
   document.handleLogin = async token => {
@@ -27,12 +33,17 @@
 
   const check = async () => {
     const token = getCookie('sbToken')
+    if (!token) {
+      document.getElementById('main').innerHTML = 'You are not logged in'
+      document.getElementById('info').innerHTML = ''
+      return
+    }
     document.getElementById('main').innerText = 'Loading...'
     const { ok, message, accessToken } = await fetch(`${authUrl}/api/check`, {
       headers: {
         authorization: token
       }
-    })
+    }).then(r => r.json())
     if (!ok) {
       document.cookie = ''
       return document.getElementById('main').innerText = 'Authentication failed: ' + message
@@ -41,15 +52,21 @@
     document.getElementById('main').innerHTML = 'Logged in! <button onclick="check()">Check again</button>'
     document.getElementById('info').innerHTML = 'Fetching information...'
 
-    const { id, username, discriminator, avatar } = await fetch(`${authUrl}/api/check`, {
+    const { id, username, discriminator, avatar } = await fetch('https://discordapp.com/api/v6/users/@me', {
       headers: {
-        authorization: accessToken
+        authorization: `Bearer ${accessToken}`
       }
-    })
+    }).then(r => r.json())
 
-    document.getElementById('info').innerHTML = `${username}#${discriminator}
-    
+    console.log(await fetch('https://discordapp.com/api/v6/users/@me/connections', {
+      headers: {
+        authorization: `Bearer ${accessToken}`
+      }
+    }).then(r => r.json()))
+
+    document.getElementById('info').innerHTML = `
     <img src="https://cdn.discordapp.com/avatars/${id}/${avatar}.gif" />
+    <h3>${username}#${discriminator}</h3>
     `
   }
 

@@ -3,7 +3,7 @@
     "example": {
       "callback": "http://localhost:9826/callback",
       "name": "Test client",
-      "scopes": ["identify"]
+      "scopes": ["identify", "connections"]
     }
   }
 }
