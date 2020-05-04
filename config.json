@@ -1,7 +1,7 @@
 {
   "clients": {
-    "test": {
-      "callback": "file:///D:/Projects/switchblade/auth/lib/callback.example.html",
+    "example": {
+      "callback": "http://localhost:9826/callback",
       "name": "Test client",
       "scopes": ["identify"]
     }

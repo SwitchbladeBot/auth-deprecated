@@ -1,0 +1,6 @@
+<pre>Logging in...</pre>
+<script>
+  const regex = /[?&]token=([^&#]*)/i
+  window.opener.document.handleLogin(regex.exec(location.href)[1])
+  window.close()
+</script>

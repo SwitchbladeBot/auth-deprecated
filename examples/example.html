@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <title>Switchblade auth test</title>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+</head>
+
+<body>
+  <p id="main">You are not logged in</p>
+  <p id="info"></p>
+  <button onclick="login()">log in</button>
+</body>
+<script>
+  const client = 'example'
+  const authUrl = 'http://localhost:2554'
+  const login = () => {
+    const popup = window.open(`${authUrl}/authorize?client=${client}`, 'Switchblade login', 'width=500,height=800')
+  }
+
+  document.handleLogin = async token => {
+    document.cookie = `sbToken=${token}`
+    check()
+  }
+
+  const check = async () => {
+    const token = getCookie('sbToken')
+    document.getElementById('main').innerText = 'Loading...'
+    const { ok, message, accessToken } = await fetch(`${authUrl}/api/check`, {
+      headers: {
+        authorization: token
+      }
+    })
+    if (!ok) {
+      document.cookie = ''
+      return document.getElementById('main').innerText = 'Authentication failed: ' + message
+    }
+    document.cookie = `sbToken=${token}`
+    document.getElementById('main').innerHTML = 'Logged in! <button onclick="check()">Check again</button>'
+    document.getElementById('info').innerHTML = 'Fetching information...'
+
+    const { id, username, discriminator, avatar } = await fetch(`${authUrl}/api/check`, {
+      headers: {
+        authorization: accessToken
+      }
+    })
+
+    document.getElementById('info').innerHTML = `${username}#${discriminator}
+    
+    <img src="https://cdn.discordapp.com/avatars/${id}/${avatar}.gif" />
+    `
+  }
+
+  const getCookie = name => {
+    const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'))
+    return match ? match[2] : undefined
+  }
+  check()
+</script>
+<style>
+  body {
+    font-family: monospace;
+  }
+</style>
+
+</html>

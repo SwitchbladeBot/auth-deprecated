@@ -37,7 +37,11 @@ module.exports = () => {
     if (result.error)
       return res.sendFile(path.resolve(__dirname, '../views', 'error.html'))
 
-    const token = jwt.sign({ accessToken: result.access_token, refreshToken: result.refresh_token }, process.env.JWT_SIG)
+    const token = jwt.sign({
+      accessToken: result.access_token,
+      refreshToken: result.refresh_token,
+      client: state.replace('client-', '')
+    }, process.env.JWT_SIG)
 
     res.redirect(`${client.callback}?token=${token}`)
 

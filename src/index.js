@@ -6,15 +6,15 @@ const PORT = process.env.PORT || 80
 
 const authorizeRoute = require('./routes/authorize.js')
 const callbackRoute = require('./routes/callback.js')
-const apiCheckRoute = require('./routes/api.check.js')
+const apiCheckRoute = require('./routes/api.js')
+
+// TODO: configure cors
+app.use(cors())
 
 // Routes
 app.use(authorizeRoute())
 app.use(callbackRoute())
-app.use('api', apiCheckRoute())
-
-// TODO: configure cors
-app.use(cors())
+app.use('/api', apiCheckRoute())
 
 app.all('/', (req, res) => {
   res.send(`<pre>

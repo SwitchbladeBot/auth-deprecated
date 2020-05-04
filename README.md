@@ -27,3 +27,5 @@ The authentication micro-service for switchblade micro-services
 ## Other to-do's
 
 - HTTPS only (cloudflare can redirect HTTP to HTTPS)
+
+- **ENCODE ALL ACCESS_TOKEN BECAUSE THEY DONT NEED ANYTHING ELSE TO WORK**
